@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=1, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+</head>
+<body>
+    <div class="main">
+        <div style="display: flex; flex-direction: column;">
+            <img src="img/images.jpg" alt="">
+            <p></p>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <div id="my_modal" class="modal">
+        <div class="modal_content">
+          <span class="close_modal_window">×</span>
+          <img src="" alt="" class="img">
+          <p class="text"></p>
+        </div>
+      </div>
+
+    <script>
+        var map = L.map('map').setView([61.482833497477245, 129.14824604375266], 15);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+
+        
+
+        var circle = L.circle([51.508, -0.09], {
+            color: 'blue',
+            fillColor: '#120fa2',
+            fillOpacity: 0.5,
+            radius: 1000
+        }).addTo(map)
+
+        circle.bindPopup("  Hello World!");
+        
+        var littleton = L.marker([61.482833497477245, 129.14824604375266]).bindPopup('Это памятник Братьев Ксенофонтовых').addEventListener("click", (event) => {img.src = "img/Brothers.png", p.innerHTML = "<p>Памятник Братьев Ксенофонтовых</p>", modal.style.display = "block";}),
+
+        denver    = L.marker([61.484399988860844, 129.15933539767164]).bindPopup('Это Бюст генерала-майора А. И. Притузова').addEventListener("click", (event) => {img.src = "img/Byst.jpg", p.innerHTML = "<p>Бюст генерала-майора Андрея Ивановича Притузова</p>", modal.style.display = "block";}),
+
+        aurora    = L.marker([61.481606124512716, 129.15219213472938]).bindPopup('Это Вечный огонь').addEventListener("click", (event) => {img.src = "img/EternalFlame.jpg", p.innerHTML = "<p>Вечный огонь</p>", modal.style.display = "block"});
+
+
+        var cities = L.layerGroup([littleton, denver, aurora]);
+
+        var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+        });
+
+var baseMaps = {
+    "OpenStreetMap": osm,
+};
+
+var overlayMaps = {
+    "Памятники": cities
+};
+var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+var crownHill = L.marker([39.75, -105.09]).bindPopup('This is Crown Hill Park.'),
+    rubyHill = L.marker([39.68, -105.00]).bindPopup('This is Ruby Hill Park.');
+
+var img = document.querySelector(".img");
+var p = document.querySelector(".text");
+
+var modal = document.querySelector(".modal");
+var span = document.getElementsByClassName("close_modal_window")[0];
+
+span.onclick = function () {
+    modal.style.display = "none";
+}
+
+// golden.addEventListener("click", (event) => {
+//     golden.src = "img/Golden-Mainstreet.jpg";
+// });
+    </script>
+</body>
+</html>
